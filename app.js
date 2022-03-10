@@ -45,9 +45,11 @@ app.use(
   })
 );
 
+const secret = process.env.SECRET;
+
 const store = new MongoDBStore({
   url: dbUrl,
-  secret: "thisshouldbebettersecret!",
+  secret,
   touchAfter: 24 * 60 * 60,
   logicalSessionTimeoutMinutes: 1000 * 1000,
 });
@@ -59,7 +61,7 @@ store.on("error", function (e) {
 const sessionConfig = {
   store,
   name: "session",
-  secret: "thisshouldbebettersecret!",
+  secret,
   resave: false,
   saveUninitialized: true,
   cookies: {
